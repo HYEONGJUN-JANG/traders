@@ -170,3 +170,37 @@ def cancel_all_order(up,coin_name):
             except: 
                 message="{}".format(sys.exc_info())
                 break
+
+# 이익실현주문 (limit)
+def take_profit(up, coin_name, buy_amt, buy_price, now_price, take_profit_rate):
+    buy_price_tot = float(buy_amt)*float(buy_price) # 구매금액
+    now_price_tot = float(buy_amt)*float(now_price) # 현재금액
+    revenue_price = buy_price_tot * take_profit_rate # 이익 실현 금액
+    message='not yet'
+    uuid='none'
+
+    if (now_price_tot - buy_price_tot) > revenue_price: #이익실현가 도달시 매도
+        try:
+            trade_price = "{:0.0{}f}".format(float(now_price),0) # 정수
+            trade_amt="{:0.0{}f}".format(float(buy_amt),4) # 소수점 4자리
+            message, uuid = sell_limit_order(up, coin_name, trade_price, trade_amt)
+        except:
+            message="{}".format(sys.exc_info())
+    return message,uuid
+
+#손실 최소화 주문 (limit)
+def stop_loss(up, coin_name, buy_amt, buy_price, now_price, stop_loss_rate):
+    buy_price_tot = float(buy_amt)*float(buy_price) # 구매금액
+    now_price_tot = float(buy_amt)*float(now_price) # 현재금액
+    stop_price = buy_price_tot * stop_loss_rate # 손실최소화 금액
+    message='not yet'
+    uuid='none'
+
+    if (buy_price_tot - now_price_tot) > stop_price: #손실최소화 금액 도달시 매도
+        try:
+            trade_price = "{:0.0{}f}".format(float(now_price),0) # 정수
+            trade_amt="{:0.0{}f}".format(float(buy_amt),4) # 소수점 4자리
+            message, uuid = sell_limit_order(up, coin_name, trade_price, trade_amt)
+        except:
+            message="{}".format(sys.exc_info())
+    return message,uuid
