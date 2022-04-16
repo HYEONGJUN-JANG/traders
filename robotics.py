@@ -5,4 +5,4 @@ import comm.trade as trade
 import comm.util as util
 import comm.calc_indicators as calc
 
-dd
+print(conf.G_API_KEY)

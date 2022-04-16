@@ -2,6 +2,7 @@
 comm/config.py
 comm/config.ini
 config.ini
+*.ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

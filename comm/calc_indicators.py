@@ -1,4 +1,4 @@
-from curses import window
+# from curses import window
 from ta.trend import SMAIndicator
 from ta.trend import WMAIndicator
 from ta.trend import EMAIndicator
